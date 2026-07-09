@@ -260,156 +260,302 @@ npx http-server
 
 ## 🎮 Los Juegos
 
-### Crystal Forge (Arkanoid Mejorado)
+---
 
-**Mecánica**: Rompe cristales con una esfera mágica controlada por paleta
+### 💎 Crystal Forge
+**Género:** Arkanoid / Breakout mejorado
 
-**Controles**:
-- ← → Mover paleta
-- ESPACIO Golpear
-- P Pausa
-- ESC Menú
+**Descripción:**  
+Purifica cristales mágicos rompiendo sus bloques con una esfera de energía controlada por paleta. Cada bloque tiene forma de cristal con facetas y se resiste a múltiples golpes, mostrando grietas visibles al recibir daño. Sobrevive las rondas, recoge power-ups y enfrenta a un jefe en los niveles múltiplos de 3.
 
-**Características**:
-- 3 niveles de dificultad
-- Power-ups: Expandir, Desacelerar, Multibola, Escudo
-- Jefes en niveles especiales
-- Sistema progresivo de 10+ niveles
+**Objetivo:** Destruir todos los bloques del nivel sin perder las 3 vidas.
 
-**Código**: `games/crystal-forge/js/crystal-forge.js`
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `←` `→` / `A` `D` | Mover paleta |
+| `Ratón` | Mover paleta (movimiento seguido) |
+| `ESPACIO` / `Clic` | Lanzar la esfera |
+| `P` | Pausa / Reanudar |
+| `ESC` | Volver al menú |
+
+**Bloques — Sistema de HP:**
+| Color | HP | Golpes necesarios |
+|-------|----|-------------------|
+| 🟢 Verde | 1 | 1 golpe |
+| 🩵 Cyan | 2 | 2 golpes |
+| 🟣 Magenta | 3 | 3 golpes |
+
+> Los bloques son inmunes 300ms tras recibir un golpe para evitar daño múltiple por frame.
+
+**⚡ Power-ups** *(aparecen al destruir un bloque, 25% de probabilidad)*:
+
+| Power-up | Color | Efecto |
+|----------|-------|--------|
+| **ANCHO** | 🟢 Verde | Amplía la paleta en +30px (máx. 150px) |
+| **LENTO** | 🩵 Cyan | Reduce la velocidad de la pelota ×0.7 |
+| **×3 BOLA** | 🟠 Naranja | Bonus de puntos (+50) *(segunda bola próximamente)* |
+| **ESCUDO** | 🟣 Magenta | Gana una vida extra |
+
+**🧌 Boss:** Aparece en niveles múltiplos de 3. Tiene forma de diamante con ojo maligno, 20 HP y se mueve horizontalmente. Barra de salud visible que cambia de color (morado → naranja → rojo).
+
+**Dificultades:**
+- **Fácil:** 8 columnas × 3 filas, velocidad 250
+- **Normal:** 10 columnas × 4 filas, velocidad 300  
+- **Difícil:** 12 columnas × 5 filas, velocidad 350
+
+**Código:** [`games/crystal-forge/js/crystal-forge.js`](games/crystal-forge/js/crystal-forge.js)
 
 ---
 
-### Quantum Duel (Pong Evolucionado)
+### ⚡ Quantum Duel
+**Género:** Pong evolucionado / Duelo 1v1
 
-**Mecánica**: Duelo 1v1 con portales y gravedad dinámica
+**Descripción:**  
+Competencia local 1 vs IA donde además de controlar una paleta debes gestionar un sistema de energía para crear portales cuánticos que desvían la pelota. La gravedad aumenta cada ronda, haciendo el juego progresivamente más desafiante.
 
-**Controles P1**:
-- ↑ ↓ Mover
-- ESPACIO Crear portal
+**Objetivo:** Ganar 3 de 5 rondas anotando goles (la pelota cruza el borde contrario).
 
-**Controles P2**:
-- W S Mover
-- ESPACIO Crear portal
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `↑` `↓` | Mover paleta (P1 / IA) |
+| `ESPACIO` | Crear portal cuántico (consume energía) |
+| `P` | Pausa |
+| `ESC` | Menú |
 
-**Características**:
-- Portales que teletransportan la pelota
-- Gravedad dinámica que aumenta cada ronda
-- Múltiples pelotas en dificultad Hard
-- 5 rondas competitivas
+**⚡ Mecánicas especiales:**
 
-**Código**: `games/quantum-duel/js/quantum-duel.js`
+| Mecánica | Descripción |
+|----------|-------------|
+| **Energía** | Barra de 0–100 que se recarga sola (20/s). Crear un portal consume energía |
+| **Portal cuántico** | Teletransporta la pelota al otro lado del campo |
+| **Gravedad dinámica** | Aumenta 50 unidades por ronda (0 → 50 → 100 → 150 → 200) |
+| **Multibola** | En dificultad Hard, se añade una segunda pelota por ronda |
 
----
+**Puntuación:** 1 punto por gol. Gana quien llegue primero a la puntuación objetivo de rondas.
 
-### BioCore (Snake con Evolución)
-
-**Mecánica**: Controla un organismo que evoluciona comiendo y mutando
-
-**Controles**:
-- ↑ ↓ ← → Mover
-
-**Características**:
-- Organismo que crece
-- Sistema de mutaciones (velocidad, tamaño, regeneración)
-- ADN coleccionable
-- Biomas diferentes
-
-**Código**: `games/biocore/js/biocore.js`
+**Código:** [`games/quantum-duel/js/quantum-duel.js`](games/quantum-duel/js/quantum-duel.js)
 
 ---
 
-### Shadow Labyrinth (Pac-Man Reimaginado)
+### 🧬 BioCore
+**Género:** Snake con evolución / Mutaciones
 
-**Mecánica**: Navega un laberinto oscuro con IA enemiga
+**Descripción:**  
+Controla un organismo vivo que crece al consumir alimento. Al comer comida de mutación (30% probabilidad), el ADN del organismo evoluciona aleatoriamente, cambiando su comportamiento. El mapa es toroidal: al salir por un borde, el organismo reaparece por el lado contrario.
 
-**Controles**:
-- ↑ ↓ ← → Mover
-- W A S D Alternativo
+**Objetivo:** Crecer lo máximo posible sin colisionar contigo mismo.
 
-**Características**:
-- Generación procedural de laberintos
-- IA perseguidora adaptativa
-- Oscuridad como mecánica central
-- Fragmentos de memoria ocultos
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `↑` `↓` `←` `→` | Cambiar dirección |
 
-**Código**: `games/shadow-labyrinth/js/shadow-labyrinth.js`
+**🍖 Tipos de alimento:**
 
----
+| Alimento | Probabilidad | Puntos | Efecto |
+|----------|-------------|--------|--------|
+| Normal | 70% | +10 | Crece un segmento |
+| **Mutación** | 30% | +50 | Crece + activa mutación aleatoria + +30 ADN |
 
-### Rocket Escape (Flappy Bird Mejorado)
+**🧬 Mutaciones** *(se activan al comer alimento de mutación)*:
 
-**Mecánica**: Pilota un cohete a través de obstáculos espaciales
+| Mutación | Efecto |
+|----------|--------|
+| **Velocidad** | Incrementa la velocidad de movimiento ×1.1 |
+| **Tamaño** | Añade un segmento extra al cuerpo inmediatamente |
+| **Regeneración** | Duplica el segmento de cola |
 
-**Controles**:
-- ESPACIO ↑ Impulsar
-- Clic Impulsar
+**Puntuación:**
+- Alimento normal: **+10 pts**
+- Alimento mutación: **+50 pts**
 
-**Características**:
-- Meteoritos y tormentas
-- Múltiples planetas
-- Crecimiento de dificultad
-- Efectos de espacio dinámicos
-
-**Código**: `games/rocket-escape/js/rocket-escape.js`
-
----
-
-### Forgotten Temple (Plataformas Retro)
-
-**Mecánica**: Explora un templo con plataformas, trampas y rompecabezas
-
-**Controles**:
-- ← → Mover
-- ESPACIO ↑ Saltar
-- W Alternativo para saltar
-
-**Características**:
-- Generación procedural de niveles
-- Trampas mortales
-- Reliquias coleccionables
-- Plataformas móviles
-
-**Código**: `games/forgotten-temple/js/forgotten-temple.js`
+**Código:** [`games/biocore/js/biocore.js`](games/biocore/js/biocore.js)
 
 ---
 
-### Galaxy Defender (Shooter Espacial)
+### 🌑 Shadow Labyrinth
+**Género:** Maze / Sigilo
 
-**Mecánica**: Defiende la galaxia de invasiones de drones
+**Descripción:**  
+Navega un laberinto de 20×20 celdas generado proceduralmente en oscuridad casi total. Un enemigo rojo te persigue desde el extremo opuesto del mapa. La supervivencia depende de conocer el laberinto y evitar al perseguidor.
 
-**Controles**:
-- ← → Mover
-- Clic Disparar
-- ESPACIO Disparar
+**Objetivo:** Sobrevivir el mayor tiempo posible sin ser alcanzado por el enemigo.
 
-**Características**:
-- Oleadas escalables
-- Gestión de energía
-- Múltiples tipos de enemigos
-- Jefes finales
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `↑` `↓` `←` `→` | Mover |
+| `W` `A` `S` `D` | Alternativo |
+| `P` | Pausa |
 
-**Código**: `games/galaxy-defender/js/galaxy-defender.js`
+**⚙️ Mecánicas:**
+
+| Mecánica | Descripción |
+|----------|-------------|
+| **Laberinto 20×20** | Generado proceduralmente con celdas de pared y paso |
+| **Radio de visión** | Campo de visión limitado a 50px alrededor del jugador |
+| **Enemigo perseguidor** | Rojo, inicia en la esquina opuesta y avanza hacia el jugador |
+| **Game Over** | Si la distancia al enemigo es < 1 celda |
+
+**Puntuación:** Basada en el tiempo de supervivencia.
+
+**Código:** [`games/shadow-labyrinth/js/shadow-labyrinth.js`](games/shadow-labyrinth/js/shadow-labyrinth.js)
+
+---
+
+### 🚀 Rocket Escape
+**Género:** Flappy Bird / Endless Runner
+
+**Descripción:**  
+Pilota un cohete a través del espacio evitando tuberías, meteoritos y tormentas. La gravedad jala constantemente el cohete hacia abajo; debes impulsar repetidamente para mantenerte en vuelo. La dificultad aumenta con la distancia recorrida.
+
+**Objetivo:** Recorrer la mayor distancia posible y superar obstáculos para acumular puntos.
+
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `ESPACIO` / `↑` | Impulso hacia arriba |
+| `Clic` | Impulso hacia arriba |
+
+**⚠️ Obstáculos:**
+
+| Obstáculo | Velocidad | Descripción |
+|-----------|-----------|-------------|
+| **Tuberías** | 200 px/s | Pares con hueco central, generadas cada 2 segundos |
+| **Meteoritos** | 250 px/s | Movimiento errático vertical aleatorio |
+| **Tormentas** | 180 px/s | Zonas de peligro extendidas |
+
+**⚡ Mecánicas:**
+
+| Mecánica | Descripción |
+|----------|-------------|
+| **Gravedad** | 400 px/s² jalando el cohete hacia abajo |
+| **Impulso** | Velocidad vertical de -250 px/s al activarse |
+| **Vidas** | 3 vidas; pierde 1 al colisionar o salir de pantalla |
+| **Scoring** | +10 puntos por tubería superada |
+| **Distancia** | Calculada como `tiempo × 100` metros |
+
+**Puntuación:** +10 pts por cada par de tuberías superado. La distancia (metros) se registra por separado.
+
+**Código:** [`games/rocket-escape/js/rocket-escape.js`](games/rocket-escape/js/rocket-escape.js)
 
 ---
 
-### Echoes of Darkness (Dungeon Crawler)
+### 🏛️ Forgotten Temple
+**Género:** Plataformas retro
 
-**Mecánica**: Explora mazmorras procedurales, derrota enemigos y recolecta ítems
+**Descripción:**  
+Explora un templo antiguo saltando entre plataformas flotantes y evitando trampas mortales en el suelo. La física incluye gravedad real, salto con inercia y plataformas de diferentes alturas. Recolecta reliquias para aumentar tu puntuación.
 
-**Controles**:
-- ↑ ↓ ← → Mover
-- W A S D Alternativo
+**Objetivo:** Sobrevivir el mayor tiempo posible evitando trampas y caídas al vacío.
 
-**Características**:
-- Mapas procedurales
-- Gestión de inventario
-- NPCs con diálogos
-- Sistema de habilidades progresivo
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `←` `→` / `A` `D` | Mover horizontalmente |
+| `ESPACIO` / `↑` / `W` | Saltar (solo en suelo) |
+| `P` | Pausa |
 
-**Código**: `games/echoes-of-darkness/js/echoes-of-darkness.js`
+**⚙️ Mecánicas:**
+
+| Mecánica | Descripción |
+|----------|-------------|
+| **Gravedad** | 600 px/s² constante |
+| **Salto** | Velocidad vertical de -300 px/s, solo desde suelo |
+| **Trampas** | Zonas rojas en el suelo: contacto = pierde vida |
+| **Caída al vacío** | Si `y > height` pierde una vida |
+| **Vidas** | 3 vidas; al morir, el jugador reaparece en Y=50 |
+
+**🏺 Sistema de reliquias:** Objetos coleccionables que otorgan puntos extra *(en desarrollo)*.
+
+**Plataformas predefinidas:**
+- Suelo completo en `y = height - 20`
+- Plataforma media en `(100, 400)` ancho 200
+- Plataforma alta en `(500, 300)` ancho 200
+
+**Código:** [`games/forgotten-temple/js/forgotten-temple.js`](games/forgotten-temple/js/forgotten-temple.js)
 
 ---
+
+### 🌌 Galaxy Defender
+**Género:** Space Shooter / Defensa galáctica
+
+**Descripción:**  
+Defiende la galaxia de oleadas de drones enemigos disparando proyectiles de energía. Cada disparo consume 10 unidades de energía; la energía se recarga automáticamente. Las oleadas aumentan en número y velocidad con cada ronda superada.
+
+**Objetivo:** Eliminar todas las oleadas enemigas sin ser alcanzado por ningún dron.
+
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `←` `→` / `A` `D` | Mover nave |
+| `ESPACIO` / `Clic` | Disparar proyectil de energía |
+| `P` | Pausa |
+
+**⚡ Sistema de energía:**
+
+| Acción | Energía |
+|--------|---------|
+| Disparo | -10 |
+| Recarga automática | +20/segundo |
+| Máximo | 100 |
+
+> Si la energía < 10, no se puede disparar.
+
+**👾 Oleadas de enemigos:**
+
+| Ronda | Enemigos | Velocidad base |
+|-------|----------|----------------|
+| 1 | 4 drones | 130 px/s |
+| 2 | 5 drones | 160 px/s |
+| N | 3+N drones | 100 + N×30 px/s |
+
+**Puntuación:** +10 puntos por cada drone eliminado.
+
+**Código:** [`games/galaxy-defender/js/galaxy-defender.js`](games/galaxy-defender/js/galaxy-defender.js)
+
+---
+
+### 🗝️ Echoes of Darkness
+**Género:** Dungeon Crawler / Acción top-down
+
+**Descripción:**  
+Explora mazmorras procedurales oscuras llenas de enemigos errantes y recoge pociones para sobrevivir. La salud se agota con cada contacto enemigo. Al superar un nivel, la mazmorra se regenera con más enemigos y obstáculos.
+
+**Objetivo:** Explorar la mazmorra, recoger todos los ítems y sobrevivir a los enemigos.
+
+**Controles:**
+| Tecla | Acción |
+|-------|--------|
+| `↑` `↓` `←` `→` | Mover |
+| `W` `A` `S` `D` | Alternativo |
+| `P` | Pausa |
+
+**🧪 Ítems coleccionables:**
+
+| Ítem | Efecto | Puntos |
+|------|--------|--------|
+| **Poción** | Recogida otorga puntos | +50 pts |
+
+**👹 Enemigos:**
+
+| Propiedad | Valor |
+|-----------|-------|
+| Movimiento | Errático (cambio de dirección aleatorio cada ~50 frames) |
+| Velocidad base | 80 px/s |
+| Escalado | +20 px/s por nivel |
+| Daño al jugador | -10 HP por contacto |
+
+**💖 Salud:** Comienza en 100 HP. Al llegar a 0, game over.
+
+**Nivel siguiente:** Se activa cuando todos los ítems son recogidos *(en desarrollo)*.
+
+**Código:** [`games/echoes-of-darkness/js/echoes-of-darkness.js`](games/echoes-of-darkness/js/echoes-of-darkness.js)
+
+---
+
 
 ## 🔧 Sistema Central
 

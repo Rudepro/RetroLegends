@@ -588,6 +588,23 @@ class CrystalForge {
     if (this.blocks.length === 0 && !this.boss) {
       this.victory();
     }
+
+    // Refrescar UI (puntos, vidas, cristales) en cada frame
+    this._refreshUI();
+  }
+
+  /**
+   * Actualiza los contadores del HUD directamente sin depender de llamadas externas
+   */
+  _refreshUI() {
+    const score     = document.getElementById('score');
+    const level     = document.getElementById('level');
+    const lives     = document.getElementById('lives');
+    const crystals  = document.getElementById('crystals');
+    if (score)    score.textContent    = this.score;
+    if (level)    level.textContent    = this.level;
+    if (lives)    lives.textContent    = this.lives;
+    if (crystals) crystals.textContent = this.crystals;
   }
 
   checkPaddleCollision() {
