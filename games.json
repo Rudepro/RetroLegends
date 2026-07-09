@@ -1,0 +1,132 @@
+{
+  "games": [
+    {
+      "id": "crystal-forge",
+      "name": "Crystal Forge",
+      "title": "Forja de Cristales",
+      "description": "Purifica cristales usando una esfera mágica en este emocionante juego de acción. Evita obstáculos, recolecta power-ups y enfrenta jefes épicos.",
+      "genre": "Acción",
+      "difficulty": "Media",
+      "path": "pages/crystal-forge.html",
+      "image": "assets/img/crystal-forge.png",
+      "unlocks": {
+        "achievements": ["forjador", "purificador"],
+        "characters": ["galaxy-defender:crystal-warrior"]
+      },
+      "playable": true,
+      "releaseDate": "2025-01-15"
+    },
+    {
+      "id": "quantum-duel",
+      "name": "Quantum Duel",
+      "title": "Duelo Cuántico",
+      "description": "Enfrenta portales y gravedad dinámica en este revolucionario juego de competencia. Múltiples pelotas, física dinámica y estrategia en tiempo real.",
+      "genre": "Estrategia",
+      "difficulty": "Alta",
+      "path": "pages/quantum-duel.html",
+      "image": "assets/img/quantum-duel.png",
+      "unlocks": {
+        "achievements": ["físico", "portales-maestro"],
+        "characters": ["shadow-labyrinth:shadow-portal"]
+      },
+      "playable": true,
+      "releaseDate": "2025-01-20"
+    },
+    {
+      "id": "biocore",
+      "name": "BioCore",
+      "title": "Núcleo Viviente",
+      "description": "Controla un organismo en evolución que muta según tu estrategia. Explora diferentes biomas, recolecta ADN y experimenta con mutaciones.",
+      "genre": "Aventura",
+      "difficulty": "Media",
+      "path": "pages/biocore.html",
+      "image": "assets/img/biocore.png",
+      "unlocks": {
+        "achievements": ["biólogo", "evolucionista"],
+        "characters": ["galaxy-defender:bio-pilot"]
+      },
+      "playable": true,
+      "releaseDate": "2025-02-01"
+    },
+    {
+      "id": "shadow-labyrinth",
+      "name": "Shadow Labyrinth",
+      "title": "Laberinto de Sombras",
+      "description": "Navega un laberinto en completa oscuridad usando sigilo e inteligencia. IA desafiante, fragmentos de memoria ocultos y misterio en cada esquina.",
+      "genre": "Estrategia",
+      "difficulty": "Alta",
+      "path": "pages/shadow-labyrinth.html",
+      "image": "assets/img/shadow-labyrinth.png",
+      "unlocks": {
+        "achievements": ["sigiloso", "maestro-sombras"],
+        "characters": ["galaxy-defender:shadow-agent"]
+      },
+      "playable": true,
+      "releaseDate": "2025-02-10"
+    },
+    {
+      "id": "rocket-escape",
+      "name": "Rocket Escape",
+      "title": "Escape Cohete",
+      "description": "Pilota un cohete a través de meteoritos y tormentas. Esquiva obstáculos, recorre diferentes planetas y desbloquea rutas alternativas.",
+      "genre": "Acción",
+      "difficulty": "Media",
+      "path": "pages/rocket-escape.html",
+      "image": "assets/img/rocket-escape.png",
+      "unlocks": {
+        "achievements": ["piloto", "explorador-espacial"],
+        "characters": ["galaxy-defender:rocket-pilot"]
+      },
+      "playable": true,
+      "releaseDate": "2025-02-15"
+    },
+    {
+      "id": "forgotten-temple",
+      "name": "Forgotten Temple",
+      "title": "Templo Olvidado",
+      "description": "Explora un templo antiguo lleno de secretos, rompecabezas complejos y trampas mortales. Recolecta reliquias y resuelve misterios ancestrales.",
+      "genre": "Aventura",
+      "difficulty": "Media-Alta",
+      "path": "pages/forgotten-temple.html",
+      "image": "assets/img/forgotten-temple.png",
+      "unlocks": {
+        "achievements": ["explorador", "arqueólogo"],
+        "characters": ["galaxy-defender:temple-guardian"]
+      },
+      "playable": true,
+      "releaseDate": "2025-02-20"
+    },
+    {
+      "id": "galaxy-defender",
+      "name": "Galaxy Defender",
+      "title": "Defensor Galáctico",
+      "description": "Defiende la galaxia de invasiones drones. Gestiona tu energía, supera oleadas cada vez más difíciles y enfrenta jefes colosales.",
+      "genre": "Shooter",
+      "difficulty": "Alta",
+      "path": "pages/galaxy-defender.html",
+      "image": "assets/img/galaxy-defender.png",
+      "unlocks": {
+        "achievements": ["defensor", "campeón-galáctico"],
+        "characters": []
+      },
+      "playable": true,
+      "releaseDate": "2025-03-01"
+    },
+    {
+      "id": "echoes-of-darkness",
+      "name": "Echoes of Darkness",
+      "title": "Ecos de Oscuridad",
+      "description": "Sumérgete en mazmorras procedurales llenas de misterio. Gestiona inventario, interactúa con NPCs, mejora habilidades y descubre secretos legendarios.",
+      "genre": "RPG",
+      "difficulty": "Alta",
+      "path": "pages/echoes-of-darkness.html",
+      "image": "assets/img/echoes-of-darkness.png",
+      "unlocks": {
+        "achievements": ["explorador-de-mazmorras", "campeón-rpg"],
+        "characters": []
+      },
+      "playable": true,
+      "releaseDate": "2025-03-10"
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ Retro Legends - Crystal Forge</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/game.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .game-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #1a1a3e 0%, #0d0d1f 100%);
+      padding: 1rem;
+    }
+
+    #gameCanvas {
+      border: 3px solid var(--primary-neon);
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+      background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .game-ui {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: rgba(5, 8, 18, 0.95);
+      border: 2px solid var(--primary-neon);
+      border-top: none;
+      font-size: 1.1rem;
+    }
+
+    .game-stat {
+      color: var(--primary-neon);
+      font-weight: bold;
+    }
+
+    .game-stat-label {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .game-controls {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .pause-btn, .menu-btn {
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      background: rgba(0, 255, 0, 0.1);
+      border: 2px solid var(--primary-neon);
+      color: var(--primary-neon);
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .pause-btn:hover, .menu-btn:hover {
+      background: rgba(0, 255, 0, 0.3);
+      box-shadow: 0 0 10px var(--primary-neon);
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: var(--dark-bg);
+      border: 3px solid var(--primary-neon);
+      padding: 2rem;
+      text-align: center;
+      max-width: 400px;
+      box-shadow: 0 0 40px var(--primary-neon);
+    }
+
+    .modal-title {
+      font-size: 2.5rem;
+      color: var(--primary-neon);
+      margin-bottom: 1.5rem;
+      text-shadow: 0 0 10px var(--primary-neon);
+    }
+
+    .modal-content {
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .modal-buttons .btn {
+      flex: 1;
+    }
+
+    .tutorial {
+      background: rgba(0, 255, 0, 0.05);
+      border: 2px solid var(--primary-neon);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-radius: 3px;
+    }
+
+    .tutorial-title {
+      color: var(--primary-neon);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .controls-list {
+      text-align: left;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 2;
+    }
+
+    .difficulty-selector {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .difficulty-btn {
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--primary-neon);
+      background: rgba(0, 255, 0, 0.1);
+      color: var(--primary-neon);
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .difficulty-btn.active {
+      background: rgba(0, 255, 0, 0.3);
+      box-shadow: 0 0 15px var(--primary-neon);
+    }
+
+    .difficulty-btn:hover {
+      background: rgba(0, 255, 0, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      .game-ui {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .game-controls {
+        position: static;
+        flex-direction: column;
+        width: 100%;
+        top: auto;
+        right: auto;
+      }
+
+      .pause-btn, .menu-btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    <div class="game-ui">
+      <div>
+        <span class="game-stat-label">Puntos:</span>
+        <span class="game-stat" id="score">0</span>
+      </div>
+      <div>
+        <span class="game-stat-label">Nivel:</span>
+        <span class="game-stat" id="level">1</span>
+      </div>
+      <div>
+        <span class="game-stat-label">Vidas:</span>
+        <span class="game-stat" id="lives">3</span>
+      </div>
+      <div>
+        <span class="game-stat-label">Cristales:</span>
+        <span class="game-stat" id="crystals">0</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles -->
+  <div class="game-controls">
+    <button class="pause-btn" id="pauseBtn">⏸ Pausa</button>
+    <button class="menu-btn" id="menuBtn">🏠 Menú</button>
+  </div>
+
+  <!-- MODALES -->
+  
+  <!-- Menu Inicial -->
+  <div class="modal-overlay active" id="mainMenu">
+    <div class="modal-box">
+      <div class="modal-title">💎 CRYSTAL FORGE</div>
+      <div class="modal-content">
+        <p>Purifica cristales usando una esfera mágica.</p>
+        <p style="font-size: 0.9rem; color: var(--secondary-neon);">Usa flecha izquierda/derecha para moverte. Espacio o clic para golpear.</p>
+      </div>
+      
+      <div class="tutorial">
+        <div class="tutorial-title">🎮 Cómo Jugar</div>
+        <div class="controls-list">
+          <div>← → Mover paleta</div>
+          <div>ESPACIO Golpear</div>
+          <div>P Pausa</div>
+          <div>ESC Menú</div>
+        </div>
+      </div>
+
+      <div>
+        <p style="margin-bottom: 1rem; color: var(--text-secondary);">Selecciona dificultad:</p>
+        <div class="difficulty-selector">
+          <button class="difficulty-btn active" data-difficulty="easy">Fácil</button>
+          <button class="difficulty-btn" data-difficulty="normal">Normal</button>
+          <button class="difficulty-btn" data-difficulty="hard">Difícil</button>
+        </div>
+      </div>
+
+      <div class="modal-buttons">
+        <button class="btn" onclick="startGame()">🎮 Jugar</button>
+        <button class="btn btn-secondary" onclick="goHome()">🏠 Atrás</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pausa -->
+  <div class="modal-overlay" id="pauseMenu">
+    <div class="modal-box">
+      <div class="modal-title">⏸ PAUSA</div>
+      <div class="modal-content">
+        El juego está en pausa.
+      </div>
+      <div class="modal-buttons">
+        <button class="btn" onclick="resumeGame()">▶ Reanudar</button>
+        <button class="btn btn-secondary" onclick="showMainMenu()">🏠 Menú</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Game Over -->
+  <div class="modal-overlay" id="gameOverMenu">
+    <div class="modal-box">
+      <div class="modal-title" id="gameOverTitle">💀 GAME OVER</div>
+      <div class="modal-content">
+        <p id="gameOverMessage">Perdiste todas tus vidas.</p>
+        <p style="font-size: 1.5rem; color: var(--primary-neon); margin: 1rem 0;">
+          Puntos: <span id="finalScore">0</span>
+        </p>
+      </div>
+      <div class="modal-buttons">
+        <button class="btn" onclick="startGame()">🔄 Reintentar</button>
+        <button class="btn btn-secondary" onclick="goHome()">🏠 Menú Principal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Victory -->
+  <div class="modal-overlay" id="victoryMenu">
+    <div class="modal-box">
+      <div class="modal-title">🎉 ¡VICTORIA!</div>
+      <div class="modal-content">
+        <p>¡Completaste el nivel!</p>
+        <p style="font-size: 1.5rem; color: var(--primary-neon); margin: 1rem 0;">
+          Puntos: <span id="victoryScore">0</span>
+        </p>
+      </div>
+      <div class="modal-buttons">
+        <button class="btn" onclick="nextLevel()">⬆ Siguiente Nivel</button>
+        <button class="btn btn-secondary" onclick="goHome()">🏠 Menú Principal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/audio.js"></script>
+  <script src="../assets/js/particles.js"></script>
+  <script src="../assets/js/effects.js"></script>
+  <script src="../assets/js/game-manager.js"></script>
+  <script src="js/crystal-forge.js"></script>
+</body>
+</html>

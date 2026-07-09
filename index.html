@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ Retro Legends - Revive los Clásicos, Descubre Nuevas Leyendas</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/landing.css">
+  <style>
+    /* Estilos específicos de landing */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, rgba(0, 255, 0, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    #particles-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .hero-logo {
+      font-size: 5rem;
+      font-weight: bold;
+      color: var(--primary-neon);
+      text-shadow: 0 0 20px var(--primary-neon), 0 0 40px var(--primary-neon);
+      margin-bottom: 1rem;
+      letter-spacing: 4px;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    .hero-slogan {
+      font-size: 1.8rem;
+      color: var(--secondary-neon);
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px var(--secondary-neon);
+      font-style: italic;
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      line-height: 1.8;
+      max-width: 700px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .about-section {
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .about-card {
+      background: rgba(0, 255, 0, 0.05);
+      border: 2px solid var(--primary-neon);
+      padding: 2rem;
+      border-radius: 5px;
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .about-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.4);
+    }
+
+    .about-card-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--secondary-neon);
+    }
+
+    .about-card-title {
+      font-size: 1.5rem;
+      color: var(--primary-neon);
+      margin-bottom: 1rem;
+    }
+
+    .games-section {
+      padding: 4rem 0;
+    }
+
+    .game-card {
+      background: rgba(10, 14, 39, 0.9);
+      border: 2px solid var(--primary-neon);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .game-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--secondary-neon);
+      box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    }
+
+    .game-thumbnail {
+      width: 100%;
+      height: 200px;
+      background: linear-gradient(135deg, #1a3a3a 0%, #0a2a2a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      border-bottom: 2px solid var(--primary-neon);
+      color: var(--secondary-neon);
+    }
+
+    .game-info {
+      padding: 1.5rem;
+    }
+
+    .game-name {
+      font-size: 1.4rem;
+      color: var(--primary-neon);
+      margin-bottom: 0.5rem;
+    }
+
+    .game-description {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      min-height: 60px;
+    }
+
+    .game-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+    }
+
+    .game-genre {
+      color: var(--secondary-neon);
+    }
+
+    .game-difficulty {
+      color: var(--warning);
+    }
+
+    .game-card .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .game-card.locked {
+      opacity: 0.6;
+      border-color: var(--text-secondary);
+    }
+
+    .game-card.locked::after {
+      content: '🔒';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 4rem;
+      z-index: 10;
+    }
+
+    .stats-section {
+      padding: 3rem 0;
+      background: rgba(0, 255, 0, 0.05);
+      border-top: 2px solid var(--primary-neon);
+      border-bottom: 2px solid var(--primary-neon);
+      margin: 2rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-item {
+      padding: 1.5rem;
+    }
+
+    .stat-value {
+      font-size: 2.5rem;
+      color: var(--primary-neon);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .scrollToTop {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--primary-neon);
+      color: var(--dark-bg);
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: none;
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 20px var(--primary-neon);
+      transition: all 0.3s ease;
+    }
+
+    .scrollToTop:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 30px var(--primary-neon);
+    }
+
+    .scrollToTop.show {
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      .hero-logo {
+        font-size: 3rem;
+      }
+
+      .hero-slogan {
+        font-size: 1.3rem;
+      }
+
+      .hero-buttons {
+        gap: 1rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <a href="index.html" class="logo">⚡ RETRO LEGENDS</a>
+        <nav>
+          <a href="#hero">Inicio</a>
+          <a href="#about">Sobre</a>
+          <a href="#games">Juegos</a>
+          <a href="#profile">Perfil</a>
+        </nav>
+        <a href="#profile" class="btn btn-small">👤 Perfil</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <canvas id="particles-canvas"></canvas>
+    <div class="hero-content fade-in">
+      <img src="assets/img/RetroLegends.png" alt="Retro Legends Logo" style="max-width: 300px; height: auto; margin-bottom: 2rem;">
+      <div class="hero-logo">RETRO LEGENDS</div>
+      <div class="hero-slogan">Revive los Clásicos. Descubre Nuevas Leyendas.</div>
+      <p class="hero-description">
+        Una plataforma arcade moderna con videojuegos originales inspirados en los grandes éxitos de los años 80 y 90.
+        Cada juego tiene su propia mecánica, desafíos únicos y secretos por descubrir.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-large" onclick="scrollToSection('games')">🎮 Jugar Ahora</button>
+        <button class="btn btn-secondary btn-large" onclick="scrollToSection('about')">📚 Explorar</button>
+        <a href="https://github.com/Rudepro/retro-legends" target="_blank" class="btn btn-secondary btn-large">⭐ GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section section" id="about">
+    <div class="container">
+      <h2>¿Qué es Retro Legends?</h2>
+      <p style="max-width: 800px; margin: 0 auto; margin-bottom: 2rem;">
+        Retro Legends es una plataforma de videojuegos moderna que celebra la era dorada del arcade.
+        No somos una colección de clones, sino un ecosistema de títulos originales con identidad propia,
+        mecánicas innovadoras y una experiencia completamente nueva.
+      </p>
+
+      <div class="about-grid">
+        <div class="about-card">
+          <div class="about-card-icon">🎨</div>
+          <div class="about-card-title">Pixel Art Retro</div>
+          <p>Estética arcade clásica con detalles modernos y animaciones suaves.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">🎵</div>
+          <div class="about-card-title">Audio Retro Synth</div>
+          <p>Sonidos sintetizados auténticos que capturan el espíritu arcade.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">🏆</div>
+          <div class="about-card-title">Sistema de Logros</div>
+          <p>Desbloquea logros, personajes y contenido exclusivo en cada juego.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">📊</div>
+          <div class="about-card-title">Estadísticas</div>
+          <p>Sigue tu progreso, puntajes récord y tiempo jugado.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">⚙️</div>
+          <div class="about-card-title">Personalizable</div>
+          <p>Ajusta música, efectos, modo CRT y más opciones.</p>
+        </div>
+        <div class="about-card">
+          <div class="about-card-icon">🌐</div>
+          <div class="about-card-title">Responsive</div>
+          <p>Juega en desktop, tablet o mobile sin compromisos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAMES SECTION -->
+  <section class="games-section section" id="games">
+    <div class="container">
+      <h2>Nuestros Juegos</h2>
+      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 3rem;">
+        Cada juego es una experiencia única con mecánicas originales y desafíos progresivos.
+      </p>
+      <div class="grid" id="games-grid">
+        <!-- Cargado dinámicamente -->
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value" id="stats-games">8</div>
+          <div class="stat-label">Juegos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="stats-achievements">10+</div>
+          <div class="stat-label">Logros</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="stats-playtime">∞</div>
+          <div class="stat-label">Horas de Juego</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="stats-unlocks">40+</div>
+          <div class="stat-label">Desbloqueos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <h3 style="margin-bottom: 1rem;">🕹️ RETRO LEGENDS</h3>
+        <p>Revive los Clásicos. Descubre Nuevas Leyendas.</p>
+        <p>© 2025 Retro Legends. Todos los derechos reservados.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">
+          Hecho con ❤️ en HTML5, CSS3 y JavaScript ES6+<br>
+          <a href="https://github.com/Rudepro/retro-legends" target="_blank" style="color: var(--primary-neon); text-decoration: none;">⭐ GitHub - Rudepro</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCROLL TO TOP -->
+  <button class="scrollToTop" id="scrollToTop">↑</button>
+
+  <!-- SCRIPTS -->
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/audio.js"></script>
+  <script src="assets/js/particles.js"></script>
+  <script src="assets/js/effects.js"></script>
+  <script src="assets/js/game-manager.js"></script>
+  <script src="assets/js/landing.js"></script>
+</body>
+</html>

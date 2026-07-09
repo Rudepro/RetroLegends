@@ -1,0 +1,99 @@
+# RetroLegends .gitignore
+
+# IDE & Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Node & Package Managers
+node_modules/
+npm-debug.log
+yarn.lock
+package-lock.json
+.npm
+.yarn
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Build & Dist
+dist/
+build/
+*.min.js
+*.min.css
+
+# Development
+.env
+.env.local
+.env.*.local
+debug/
+temp/
+tmp/
+*.log
+
+# OS Generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# Comentarios de desarrollo
+*.TODO
+*.todo
+FIXME.txt
+
+# Backups
+*.bak
+*.backup
+*.old
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# Documentation builds
+docs/_build/
+site/
+
+# Ignore all asset files for production (if too large)
+# assets/img/*.psd
+# assets/audio/*.wav
+
+# Ignore user-specific settings
+.vscode/settings.json
+.vscode/launch.json
+
+# Cache files
+.cache/
+.eslintcache

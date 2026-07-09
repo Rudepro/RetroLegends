@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ Retro Legends - Rocket Escape</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/css/game.css">
+  <style>
+    body { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .game-container { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a0a2a 0%, #0d051a 100%); padding: 1rem; }
+    #gameCanvas { border: 3px solid #00ffff; box-shadow: 0 0 30px rgba(0, 255, 255, 0.5); background: linear-gradient(to bottom, #000033 0%, #330033 100%); max-width: 100%; height: auto; image-rendering: pixelated; }
+    .game-ui { width: 100%; max-width: 800px; display: flex; justify-content: space-around; align-items: center; padding: 1rem; background: rgba(5, 8, 18, 0.95); border: 2px solid #00ffff; border-top: none; font-size: 1.1rem; }
+    .game-stat { color: #00ffff; font-weight: bold; }
+    .game-stat-label { color: var(--text-secondary); font-size: 0.9rem; }
+    .game-controls { position: fixed; top: 1rem; right: 1rem; z-index: 1000; display: flex; gap: 1rem; }
+    .pause-btn, .menu-btn { padding: 0.8rem 1.5rem; font-size: 1rem; background: rgba(0, 255, 255, 0.1); border: 2px solid #00ffff; color: #00ffff; cursor: pointer; font-family: 'Courier New', monospace; text-transform: uppercase; transition: all 0.3s ease; }
+    .pause-btn:hover, .menu-btn:hover { background: rgba(0, 255, 255, 0.3); box-shadow: 0 0 10px #00ffff; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 2000; align-items: center; justify-content: center; }
+    .modal-overlay.active { display: flex; }
+    .modal-box { background: var(--dark-bg); border: 3px solid #00ffff; padding: 2rem; text-align: center; max-width: 400px; box-shadow: 0 0 40px #00ffff; }
+    .modal-title { font-size: 2.5rem; color: #00ffff; margin-bottom: 1.5rem; text-shadow: 0 0 10px #00ffff; }
+    .modal-content { margin-bottom: 2rem; color: var(--text-secondary); line-height: 1.8; }
+    .modal-buttons { display: flex; gap: 1rem; justify-content: center; }
+    .modal-buttons .btn { flex: 1; }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <canvas id="gameCanvas" width="400" height="600"></canvas>
+    <div class="game-ui">
+      <div><span class="game-stat-label">Puntos:</span> <span class="game-stat" id="score">0</span></div>
+      <div><span class="game-stat-label">Distancia:</span> <span class="game-stat" id="distance">0m</span></div>
+      <div><span class="game-stat-label">Vidas:</span> <span class="game-stat" id="lives">3</span></div>
+    </div>
+  </div>
+
+  <div class="game-controls">
+    <button class="pause-btn" id="pauseBtn">⏸ Pausa</button>
+    <button class="menu-btn" id="menuBtn">🏠 Menú</button>
+  </div>
+
+  <div class="modal-overlay active" id="mainMenu">
+    <div class="modal-box">
+      <div class="modal-title">🚀 ROCKET ESCAPE</div>
+      <div class="modal-content">
+        <p>Pilota tu cohete a través de meteoritos, tormentas y planetas.</p>
+      </div>
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" onclick="startGame()">🚀 Jugar</button>
+        <button class="btn" onclick="goHome()">🏠 Atrás</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="pauseMenu">
+    <div class="modal-box">
+      <div class="modal-title">⏸ PAUSA</div>
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" onclick="resumeGame()">▶ Reanudar</button>
+        <button class="btn" onclick="goHome()">🏠 Menú</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="gameOverMenu">
+    <div class="modal-box">
+      <div class="modal-title">💀 GAME OVER</div>
+      <div class="modal-content">
+        <p>Distancia: <span id="finalDistance">0m</span></p>
+      </div>
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" onclick="startGame()">🔄 Reintentar</button>
+        <button class="btn" onclick="goHome()">🏠 Menú</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/audio.js"></script>
+  <script src="../assets/js/particles.js"></script>
+  <script src="../assets/js/effects.js"></script>
+  <script src="../assets/js/game-manager.js"></script>
+  <script src="js/rocket-escape.js"></script>
+</body>
+</html>
