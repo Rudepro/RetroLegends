@@ -28,8 +28,9 @@
       border: 3px solid var(--primary-neon);
       box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
       background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 100%);
+      /* El canvas interno es 800x600 pero se escala con CSS */
       max-width: 100%;
-      height: auto;
+      display: block;
       image-rendering: pixelated;
     }
 
@@ -109,7 +110,7 @@
     }
 
     .modal-title {
-      font-size: 2.5rem;
+      font-size: clamp(1.4rem, 5vw, 2.5rem);
       color: var(--primary-neon);
       margin-bottom: 1.5rem;
       text-shadow: 0 0 10px var(--primary-neon);
@@ -181,19 +182,45 @@
 
     @media (max-width: 768px) {
       .game-ui {
-        flex-direction: column;
-        gap: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        padding: 0.5rem;
       }
 
       .game-controls {
-        position: static;
-        flex-direction: column;
-        width: 100%;
-        top: auto;
-        right: auto;
+        position: fixed;
+        top: 0.5rem;
+        right: 0.5rem;
+        flex-direction: row;
+        gap: 0.4rem;
       }
 
       .pause-btn, .menu-btn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .modal-box {
+        max-width: 95vw;
+        padding: 1.2rem;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .modal-buttons {
+        flex-wrap: wrap;
+      }
+
+      .difficulty-selector {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .game-controls {
+        position: static;
+        justify-content: center;
         width: 100%;
       }
     }
